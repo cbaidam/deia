@@ -1,0 +1,30 @@
+type: GenericCrafter
+name: Vápenka
+description: Vyrábí vápník z písku a vody.
+size: 2
+health: 200
+craftTime: 90
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 0.8
+  items: [
+    sand/2
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.05
+  }
+}
+
+outputItem: calcium/1
+
+requirements: [
+  copper/50
+  lead/30
+  graphite/20
+]
+
+category: crafting

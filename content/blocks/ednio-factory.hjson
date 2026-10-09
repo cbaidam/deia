@@ -1,0 +1,28 @@
+type: UnitFactory
+name: Továrna na Edniy
+description: Vyrábí jednotku Ednio.
+size: 2
+health: 300
+
+consumes: {
+  power: 1.2
+}
+
+plans: [
+  {
+    unit: ednio
+    time: 600
+    requirements: [
+      silicon/20
+      lead/10
+    ]
+  }
+]
+
+requirements: [
+  copper/60
+  lead/70
+  silicon/30
+]
+
+category: units

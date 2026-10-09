@@ -1,0 +1,29 @@
+type: GenericCrafter
+name: "Thoriová továrna"
+size: 1
+health: 60
+craftTime: 100
+craftEffect: pulverize
+category: crafting
+
+hasPower: true
+hasItems: true
+
+consumes: {
+  power: 1.5
+  items: [
+    titanium/4
+    pyratite/10
+  ]
+}
+
+outputItem: thorium/2
+
+requirements: [
+	copper/35
+	surge-alloy/50
+	silicon/20
+]
+
+category: crafting
+research: pyratite-mixer

@@ -1,0 +1,31 @@
+type: GenericCrafter
+name: Syntetizér aminokyselin
+description: Ze spórových lusků a vody vyrábí aminokyseliny.
+size: 2
+health: 200
+craftTime: 100
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.0
+  items: [
+    spore-pod/2
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.1
+  }
+}
+
+outputItem: amino-acid/1
+
+requirements: [
+  copper/60
+  lead/40
+  graphite/30
+  silicon/20
+]
+
+category: crafting

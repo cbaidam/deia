@@ -1,0 +1,13 @@
+name: Dřevo
+description: Dřevo ze stromů. V papírně se z něj vyrábí papír.
+color: 8d6e63
+cost: 2
+flammability: 0.98
+explosiveness: 0
+radioactivity: 0
+charge: 0
+hardness: 6
+shownPlanets: [
+  serpulo
+  erekir
+]

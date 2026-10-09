@@ -1,0 +1,31 @@
+type: GenericCrafter
+name: Oxidační komora
+description: Z písku a kyslíku vyrábí oxid, surovinu z Erekiru, na Serpulu.
+size: 2
+health: 220
+craftTime: 120
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.2
+  items: [
+    sand/2
+  ]
+  liquid: {
+    liquid: oxygen
+    amount: 0.1
+  }
+}
+
+outputItem: oxide/1
+
+requirements: [
+  copper/60
+  lead/40
+  graphite/30
+  silicon/30
+]
+
+category: crafting

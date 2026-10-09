@@ -1,0 +1,43 @@
+type: GenericCrafter
+name: "Továrna na papír"
+description: "Vyrábí papír ze zbytků nalezených ve šrotu a produkuje tak navíc strusku. Určeno pro mapy, kde nejsou lesy."
+size: 3
+health: 150
+itemCapacity: 100
+craftTime: 150
+craftEffect: pulverize
+
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.8
+  items: [
+    scrap/10
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.1
+  }
+}
+
+// Výstupní surovina (jen jedna)
+outputItem: papir/10
+
+// Struska je kapalina, ne předmět
+outputLiquid: {
+  liquid: slag
+  amount: 0.2
+}
+
+requirements: [
+  plastanium/8
+  lead/38
+  graphite/18
+  copper/20
+  metaglass/8
+]
+
+category: crafting
+research: wood_extractor

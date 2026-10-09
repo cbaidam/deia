@@ -1,0 +1,25 @@
+type: ConsumeGenerator
+name: Spalovna
+description: Spaluje hořlavé suroviny (uhlí, papír, dřevo) a vyrábí z nich elektřinu. Účinnost závisí na hořlavosti suroviny.
+
+size: 2
+health: 220
+
+powerProduction: 3.0
+itemDuration: 120
+generateEffect: generatespark
+
+consumes: {
+  itemFlammable: {
+    minFlammability: 0.9
+  }
+}
+
+requirements: [
+  copper/60
+  lead/50
+  graphite/30
+]
+
+category: power
+research: combustion-generator

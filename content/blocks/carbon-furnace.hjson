@@ -1,0 +1,25 @@
+type: GenericCrafter
+name: Karbonizační pec
+description: Vyrábí uhlík z uhlí.
+size: 2
+health: 220
+craftTime: 90
+hasPower: true
+hasItems: true
+
+consumes: {
+  power: 1.0
+  items: [
+    coal/2
+  ]
+}
+
+outputItem: carbon/1
+
+requirements: [
+  copper/50
+  lead/30
+  graphite/30
+]
+
+category: crafting

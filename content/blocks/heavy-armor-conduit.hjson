@@ -1,0 +1,16 @@
+type: ArmoredConduit
+name: Obrněné pancéřové potrubí
+description: Pancéřové potrubí, které nepřijímá kapaliny ze stran (jen z jiných potrubí).
+health: 160
+armor: 3
+liquidCapacity: 16
+liquidPressure: 1.025
+
+requirements: [
+  plastanium/1
+  thorium/2
+  metaglass/1
+]
+
+category: liquid
+research: armor-conduit

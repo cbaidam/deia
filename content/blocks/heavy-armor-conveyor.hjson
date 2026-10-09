@@ -1,0 +1,16 @@
+type: ArmoredConveyor
+name: Obrněný pancéřový dopravník
+description: Pancéřový dopravník, který nepřijímá předměty ze stran (jen z jiných dopravníků).
+health: 200
+armor: 3
+speed: 0.08
+displayedSpeed: 11
+
+requirements: [
+  plastanium/1
+  thorium/1
+  metaglass/1
+]
+
+category: distribution
+research: armor-conveyor

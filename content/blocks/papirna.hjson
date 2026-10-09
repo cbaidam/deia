@@ -1,0 +1,34 @@
+type: GenericCrafter
+name: "Papírna"
+size: 3
+health: 120
+itemCapacity: 40
+craftTime: 120
+craftEffect: pulverize
+
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.5
+  items: [
+    wood/1
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.1
+  }
+}
+
+// Výstupní surovina
+outputItem: papir/20
+
+requirements: [
+	plastanium/8
+	lead/38
+	graphite/18
+]
+
+category: crafting
+research: wood_extractor

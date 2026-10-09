@@ -1,0 +1,94 @@
+type: ItemTurret
+name: Tera-C
+description: "Malá, ale zato velmi, velmi, velmi (cca 5x velmi) silná. Potřebuje značné množství chladící kapaliny, aby se uchladila."
+
+size: 1
+health: 15850
+range: 509
+ammoUseEffect: casing3
+maxAmmo: 200
+inaccuracy: 0
+rotateSpeed: 500
+reload: 1
+shootSound: deia-tera
+
+// Správné nastavení chlazení kryogenem a spotřeby surovin
+hasLiquids: true
+liquidCapacity: 40
+consumes: {
+  liquid: {
+    liquid: cryofluid
+    amount: 0.1
+  }
+}
+
+ammoTypes: {
+  wood: {
+    type: ArtilleryBulletType
+    speed: 10.5
+    damage: 0
+    splashDamage: 5000
+    splashDamageRadius: 40
+    status: burning
+    statusDuration: 180
+    width: 6
+    height: 10
+    frontColor: 9f5521
+    backColor: 9f5522
+    shootEffect: shootBig
+    smokeEffect: shootSmokeMissile//bigGreenSmoke //shootSmokeMissile
+    ammoMultiplier: 10
+  }
+  papir: {
+    type: ArtilleryBulletType
+    speed: 8.0
+    damage: 0
+    splashDamage: 18
+    splashDamageRadius: 20
+    width: 1
+    height: 1
+    frontColor: FFA500
+    backColor: FFA500
+    status: burning
+    statusDuration: 50
+    shootEffect: shootSmall
+    //smokeEffect: shootSmokeSmite //shootSmokeMissile
+    smokeEffect: {
+      type: ParticleEffect
+      particles: 5
+      length: 40
+      lifetime: 60
+      cone: 30
+      colorFrom: 2b8f3c
+      colorTo: 2b8f3c
+      sizeFrom: 3
+      sizeTo: 11
+    }
+    ammoMultiplier: 10
+  }
+  silicon: {
+    type: BasicBulletType
+    speed: 9.5
+    damage: 10
+    width: 2
+    height: 2
+    shootEffect: shootSmall
+    smokeEffect: shootSmokeMissile
+    homingPower: 10.0
+    homingRange: 120.0
+    ammoMultiplier: 10
+  }
+}
+
+requirements: [
+  plastanium/35
+  lead/55
+  copper/20
+  titanium/10
+  carbon/25
+  metaglass/20
+  surge-alloy/10
+]
+
+category: turret
+research: duo

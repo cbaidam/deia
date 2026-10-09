@@ -1,0 +1,6 @@
+name: Buňky
+description: Živé buňky v živném roztoku. Čerpají se potrubím z Továrny na buňky do Domu.
+color: e57399
+viscosity: 0.6
+flammability: 0.9
+radioactivity: 0.5

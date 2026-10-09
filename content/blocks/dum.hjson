@@ -1,0 +1,39 @@
+type: UnitFactory
+name: Dům
+description: Vyrábí jednotku "Člověk" z buněk, vody a uhlíku. Buňky a vodu přivádí potrubím, uhlík dopravníkem.
+size: 3
+health: 300
+
+consumes: {
+  power: 1.2
+  liquids: [
+    {
+      liquid: water
+      amount: 0.1
+    }
+    {
+      liquid: cells
+      amount: 0.15
+    }
+  ]
+}
+
+plans: [
+  {
+    unit: clovek
+    time: 1800
+    requirements: [
+      carbon/20
+    ]
+  }
+]
+
+requirements: [
+  copper/50
+  lead/20
+  graphite/50
+  silicon/50
+  plastanium/10
+]
+
+category: units

@@ -1,0 +1,21 @@
+type: BufferedItemBridge
+name: Hyper-most
+description: Přepravuje předměty vzduchem na velkou vzdálenost.
+
+size: 1
+health: 120
+range: 500
+speed: 74
+bufferCapacity: 30
+fadeIn: false
+moveArrows: false
+
+requirements: [
+  phase-fabric/6
+  silicon/20
+  lead/30
+  graphite/20
+]
+
+category: distribution
+research: phase-conveyor

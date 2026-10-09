@@ -1,0 +1,24 @@
+type: mech
+name: Pěšák
+description: Základní pěchota vyrobená v Domě.
+health: 130
+speed: 1.0
+hitSize: 8
+drawCell: false
+armor: 6
+
+weapons: [
+  {
+    name: clovek-weapon
+    reload: 10
+    x: 3
+    y: 0
+    top: false
+    bullet: {
+      type: BasicBulletType
+      damage: 20
+      speed: 5
+      lifetime: 45
+    }
+  }
+]

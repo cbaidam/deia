@@ -1,0 +1,30 @@
+type: GenericCrafter
+name: Generátor kyslíku
+description: Rozkládá vodu elektrolýzou na kyslík.
+size: 2
+health: 200
+craftTime: 60
+hasPower: true
+hasLiquids: true
+
+consumes: {
+  power: 1.0
+  liquid: {
+    liquid: water
+    amount: 0.1
+  }
+}
+
+outputLiquid: {
+  liquid: oxygen
+  amount: 0.1
+}
+
+requirements: [
+  copper/60
+  lead/40
+  graphite/20
+  silicon/20
+]
+
+category: crafting

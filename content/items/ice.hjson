@@ -1,0 +1,13 @@
+name: Led
+description: Led - zmrzlá voda.
+color: 1aa4aa
+cost: 2
+hardness: 0
+flammability: 0
+explosiveness: 0
+radioactivity: 0
+charge: 0.1
+shownPlanets: [
+  serpulo
+  erekir
+]

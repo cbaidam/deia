@@ -1,0 +1,58 @@
+type: ItemTurret
+name: Zapalovač
+description: Střílna, která zapaluje koule z papíru a odpaluje je vysokou rychlostí na nepřítele.
+
+size: 2
+health: 1000
+range: 190
+ammoUseEffect: none
+maxAmmo: 50
+inaccuracy: 1
+rotateSpeed: 150
+reload: 5
+	
+ammoTypes: {
+	// PŮVODNÍ MUNICE
+	coal: {
+		type: BasicBulletType
+		speed: 2.5
+		damage: 50
+		width: 10
+		height: 10
+		shootEffect: shootSmall
+		smokeEffect: shootSmallSmoke
+		ammoMultiplier: 1
+	}	
+	// NOVÁ MUNICE - PAPÍR
+	// Důležité: název musí přesně odpovídat názvu souboru papir.hjson (bez přípony)
+	papir: {
+		type: BasicBulletType
+		speed: 8.0         // Papír je lehký, poletí rychle
+		damage: 12         // Menší přímé poškození, ale kompenzované ohněm
+		width: 8
+		height: 12
+		
+		// Vizuální efekty ohně
+		shootEffect: shootSmall
+		smokeEffect: shootSmallSmoke
+		frontColor: ffa64d  // Oranžová barva projektilu
+		backColor: ff3300   // Červený obrys projektilu
+		trailColor: ffa64d  // Stopa za nábojem
+		
+		// ZAPALOVACÍ SCHOPNOSTI
+		makeFire: true
+		status: burning
+		statusDuration: 360        // Jak dlouho bude nepřítel hořet (ve framech, 180 = 3 sekundy, 360 = 6(Jestli se nepletu.))
+		
+		ammoMultiplier: 15         // Jeden kus papíru dodá hodně nábojů (je skladný)
+	}
+}
+
+requirements: [
+	lead/5
+	titanium/10
+	copper/40
+]
+
+category: turret
+research: duo

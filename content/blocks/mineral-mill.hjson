@@ -1,0 +1,32 @@
+type: GenericCrafter
+name: Mlýn minerálů
+description: Ze šrotu a písku mele minerály.
+size: 2
+health: 220
+craftTime: 100
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.0
+  items: [
+    scrap/2
+    sand/1
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.05
+  }
+}
+
+outputItem: mineral/1
+
+requirements: [
+  copper/50
+  lead/30
+  graphite/20
+  silicon/10
+]
+
+category: crafting

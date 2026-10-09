@@ -1,0 +1,15 @@
+type: Conduit
+name: Pancéřové potrubí
+description: Potrubí s pancířem. Odolnější proti střelbě.
+health: 120
+armor: 3
+liquidCapacity: 16
+liquidPressure: 1.025
+
+requirements: [
+  metaglass/1
+  titanium/2
+]
+
+category: liquid
+research: pulse-conduit

@@ -1,0 +1,13 @@
+name: Fosfor
+description: Fosfor pro živé organismy. Získává se z výtrusů a šrotu.
+color: d9534f
+cost: 1
+hardness: 0
+flammability: 0
+explosiveness: 0
+radioactivity: 0
+charge: 0
+shownPlanets: [
+  serpulo
+  erekir
+]

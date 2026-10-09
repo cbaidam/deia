@@ -1,0 +1,20 @@
+type: Drill
+name: Extraktor dřeva
+description: Speciální vrt, který jako jediný vytěží dřevo ze stromů.
+size: 2
+health: 200
+tier: 6
+drillTime: 300
+
+consumes: {
+  power: 0.9
+}
+
+requirements: [
+  copper/40
+  graphite/25
+  lead/20
+]
+
+category: production
+research: mechanical-drill

@@ -1,0 +1,39 @@
+type: Wall
+name: "Boom-boom-mini - velmi nebezpečná mina."
+description: "Těžce obrněná past. Má vysoký armor, ale jakmile ji nepřítel poškodí a prorazí, vybuchne obrovskou silou."
+size: 2
+
+// ŽIVOTY A BRNĚNÍ
+health: 40           
+armor: 10            
+
+category: defense    
+research: copper-wall
+
+requirements: [
+  copper/30
+  thorium/2
+  ice/10
+]
+
+// CO SE STANE PŘI ZNIČENÍ (VÝBUCH)
+destroyBullet: {
+  // OPRAVENO: Změněno z BulletType na BasicBulletType
+  type: BasicBulletType    
+  speed: 0
+  damage: 0           
+
+  // Zkuste si dát auto pod atomovku.
+  splashDamage: 400000 
+  splashDamageRadius: 100 
+
+  // Vizuální efekty výbuchu
+  hitEffect: reactorExplosion
+  despawnEffect: reactorExplosion
+  shootEffect: none
+  smokeEffect: none
+  
+  // Bonus: Výbuch zapálí zem kolem sebe
+  incendAmount: 5
+  incendSpread: 40
+}

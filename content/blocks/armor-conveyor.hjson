@@ -1,0 +1,16 @@
+type: Conveyor
+name: Pancéřový dopravník
+description: Rychlý dopravník s pancířem. Odolnější proti střelbě.
+health: 150
+armor: 3
+speed: 0.08
+displayedSpeed: 11
+
+requirements: [
+  copper/1
+  lead/1
+  titanium/1
+]
+
+category: distribution
+research: titanium-conveyor

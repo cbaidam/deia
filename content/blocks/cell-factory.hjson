@@ -1,0 +1,60 @@
+type: GenericCrafter
+name: Továrna na buňky
+description: Z kyslíku, oxidu, vápníku, fosforu, aminokyselin, minerálů a spór vyrábí buňky. Ty se potrubím posílají do Domu.
+size: 3
+health: 350
+craftTime: 180
+hasPower: true
+hasItems: true
+hasLiquids: true
+itemCapacity: 30
+
+consumes: {
+  power: 2.0
+  items: [
+    oxide/1
+    calcium/1
+    phosphorus/1
+    amino-acid/2
+    mineral/2
+    spore-pod/2
+  ]
+  liquid: {
+    liquid: oxygen
+    amount: 0.1
+  }
+}
+
+outputLiquid: {
+  liquid: cells
+  amount: 0.2
+}
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawRegion
+      suffix: -fan
+      spinSprite: true
+      rotateSpeed: 2
+    }
+    {
+      type: DrawRegion
+      suffix: -top
+    }
+  ]
+}
+
+requirements: [
+  copper/80
+  lead/60
+  graphite/60
+  silicon/60
+  titanium/30
+]
+
+category: crafting

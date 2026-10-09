@@ -1,0 +1,26 @@
+type: GenericCrafter
+name: Extraktor fosforu
+description: Z výtrusů a šrotu získává fosfor.
+size: 2
+health: 200
+craftTime: 120
+hasPower: true
+hasItems: true
+
+consumes: {
+  power: 1.0
+  items: [
+    spore-pod/2
+    scrap/1
+  ]
+}
+
+outputItem: phosphorus/1
+
+requirements: [
+  copper/50
+  lead/30
+  graphite/30
+]
+
+category: crafting

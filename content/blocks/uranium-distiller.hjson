@@ -1,0 +1,50 @@
+// Název souboru musí být: uranium-distiller.hjson
+type: GenericCrafter
+name: "Uranový Destilátor"
+description: "Využívá kontrolovanou radiaci k přeměně dřeva a vody na thorium. Pokud ztratí chlazení, radiace poškodí okolí!"
+size: 2
+health: 800
+category: crafting
+research: kiln
+
+hasItems: true
+hasLiquids: true
+craftTime: 90
+
+// Recept pro výrobu
+consumes: {
+  items: [
+    wood/2
+  ]
+  liquid: {
+    liquid: water
+    amount: 0.2
+  }
+}
+
+drawer: {
+  type: DrawMulti
+  drawers: [
+    {
+      type: DrawDefault
+    }
+    {
+      type: DrawRegion
+      suffix: -fan
+      spinSprite: true
+      rotateSpeed: 5
+    }
+    {
+      type: DrawRegion
+      suffix: -top
+    }
+  ]
+}
+
+outputItem: thorium/1
+
+requirements: [
+  lead/80
+  copper/100
+  silicon/40
+]
