@@ -1,7 +1,7 @@
 type: Wall
 name: "Boom-boom-mini - velmi nebezpečná mina."
 description: "Těžce obrněná past. Má vysoký armor, ale jakmile ji nepřítel poškodí a prorazí, vybuchne obrovskou silou."
-size: 2
+size: 1
 
 // ŽIVOTY A BRNĚNÍ
 health: 40           
