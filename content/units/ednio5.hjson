@@ -1,23 +1,23 @@
     "type": "flying",
-    name: Ednio
-    loopSound: deia-ednio-hum1
+    name: Ednio V
+    loopSound: deia-ednio-hum5
     loopSoundVolume: 0.3
     "lowAltitude": true,
-    "speed": 4.8,
+    "speed": 3.2,
     "accel": 0.05,
     "drag": 0.04,
     "flying": true,
     drawCell: false,
-    "health": 200,
-    "hitSize": 7,
-    "armor": 1,
+    "health": 9000,
+    "hitSize": 24,
+    "armor": 16,
     "itemCapacity": 100,
   "outlineColor": "b2b8c2",
-    "engineOffset": 5,
+    "engineOffset": 16.8,
     "faceTarget": true,
-    mineTier: 2
-    mineSpeed: 1.5
-    buildSpeed: 1
+    mineTier: 5
+    mineSpeed: 4
+    buildSpeed: 3.5
     mineRange: 40
 mineItems: [
   copper
@@ -33,23 +33,23 @@ mineItems: [
 	"weapons": [
 {
 name: ednio-weapon
-x: 0
+x: 9.6
 y: 1
-mirror: false
+mirror: true
 shoot: {
 type: ShootPattern
 shots: 1
 }
 top: false
 rotate: true
-reload: 60
+reload: 30
 recoil: 2
     shootSound: pew
     bullet: {
       speed: 8
       lifetime: 40
-      damage: 40
-    healAmount: 15
+      damage: 300
+    healAmount: 60
     collidesTeam: true
     collides: true
       width: 8
@@ -120,7 +120,3 @@ recoil: 2
     }
 }
  ] 
-research: {
-    parent: flare
-}
-researchCostMultiplier: 0

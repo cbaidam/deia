@@ -1,0 +1,32 @@
+type: Reconstructor
+name: Přestavovač Ednio II
+description: Přestaví jednotku ednio2 na vyšší úroveň ednio3.
+size: 5
+health: 1375
+constructTime: 1200
+
+consumes: {
+  power: 6.0
+  items: [
+    silicon/130
+    titanium/80
+    metaglass/40
+  ]
+}
+
+upgrades: [
+  [
+    ednio2
+    ednio3
+  ]
+]
+
+requirements: [
+  lead/650
+  silicon/450
+  titanium/350
+  thorium/650
+]
+
+category: units
+research: ednio-recon-1
