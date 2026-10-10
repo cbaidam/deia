@@ -1,0 +1,20 @@
+type: Wall
+name: Anti-Boom zeď
+description: Zeď s extrémním pancířem. Odolává střelám i výbuchům a chrání budovy za sebou.
+size: 1
+health: 3600
+armor: 30
+absorbLasers: true
+insulated: true
+chanceDeflect: 10
+flashHit: true
+
+requirements: [
+  titanium/6
+  plastanium/4
+  thorium/6
+  blast-compound/2
+]
+
+category: defense
+research: thorium-wall
