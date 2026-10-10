@@ -1,0 +1,18 @@
+type: CoreBlock
+name: Jádro: Deia
+description: Vylepšené jádro s velkou kapacitou a silným pancířem. Dá se postavit přes Jádro: Základ (nebo menší jádro).
+size: 4
+health: 5000
+armor: 8
+itemCapacity: 12000
+unitType: ednio
+unitCapModifier: 20
+
+requirements: [
+  copper/5000
+  silicon/2500
+  titanium/1000
+]
+
+category: effect
+alwaysUnlocked: true
