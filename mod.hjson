@@ -2,11 +2,7 @@ name: "deia"
 displayName: "Deia"
 author: "Adam Vlasatý"
 description: "[#ff9800]Deia Game mod.[] Adam Vlasatý"
-<<<<<<< HEAD
-version: "1"
-=======
-version: "1.5"
->>>>>>> 95dc77ec80e1a5af7434699c662ae0528a6e0d41
+version: "1.5.BugFix"
 repo: "Cbaidam/deia"
 minGameVersion: "154"
 hidden: false
