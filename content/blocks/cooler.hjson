@@ -18,7 +18,7 @@ consumes: {
   }
 }
 
-outputItem: thorium/2
+outputItem: ice/10
 
 requirements: [
 	copper/35
