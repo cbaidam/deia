@@ -37,6 +37,17 @@ ammoTypes: {
     backColor: 9f5522
     shootEffect: shootBig
     //smokeEffect: //shootSmokeMissile //bigGreenSmoke
+    smokeEffect: {
+      type: ParticleEffect
+      particles: 5
+      length: 40
+      lifetime: 60
+      cone: 30
+      colorFrom: 2b8f3c
+      colorTo: 2b8f3c
+      sizeFrom: 3
+      sizeTo: 11
+    }
     ammoMultiplier: 10
   }
   papir: {
