@@ -1,0 +1,32 @@
+type: ConsumeGenerator
+name: Vodní turbína
+description: Vyrábí elektřinu z protékající vody. Voda se přivádí potrubím a po průchodu se zase vypouští. Dá se postavit téměř kdekoli.
+size: 2
+health: 260
+floating: true
+hasLiquids: true
+liquidCapacity: 20
+
+powerProduction: 2.5
+
+consumes: {
+  liquid: {
+    liquid: water
+    amount: 0.2
+  }
+}
+
+outputLiquid: {
+  liquid: water
+  amount: 0.2
+}
+
+requirements: [
+  copper/60
+  graphite/40
+  lead/50
+  metaglass/30
+]
+
+category: power
+research: combustion-generator

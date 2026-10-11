@@ -1,0 +1,29 @@
+type: ConsumeGenerator
+name: Vodní elektrárna
+description: Musí stát přímo na vodě. Vyrábí elektřinu a vodu. Vodu není nutné odvádět.
+size: 3
+health: 450
+requiresWater: true
+floating: true
+hasLiquids: true
+liquidCapacity: 60
+
+powerProduction: 9.0
+ignoreLiquidFullness: true
+
+outputLiquid: {
+  liquid: water
+  amount: 0.8
+}
+
+requirements: [
+  copper/150
+  graphite/120
+  lead/150
+  metaglass/80
+  silicon/60
+  titanium/40
+]
+
+category: power
+research: water-turbine
