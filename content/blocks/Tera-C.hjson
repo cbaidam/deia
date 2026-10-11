@@ -36,7 +36,7 @@ ammoTypes: {
     frontColor: 9f5521
     backColor: 9f5522
     shootEffect: shootBig
-    smokeEffect: shootSmokeMissile//bigGreenSmoke //shootSmokeMissile
+    //smokeEffect: //shootSmokeMissile //bigGreenSmoke
     ammoMultiplier: 10
   }
   papir: {
