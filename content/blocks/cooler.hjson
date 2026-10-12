@@ -3,7 +3,7 @@ name: "Mrazírna"
 description: Mrazí vodu na led.
 size: 1
 health: 100
-craftTime: 120
+craftTime: 150
 craftEffect: pulverize
 category: crafting
 
@@ -18,7 +18,7 @@ consumes: {
   }
 }
 
-outputItem: thorium/2
+outputItem: ice/3
 
 requirements: [
 	copper/35
