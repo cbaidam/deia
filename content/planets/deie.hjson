@@ -13,6 +13,7 @@ atmosphereRadIn: 0.02
 atmosphereRadOut: 0.25
 iconColor: 4caf50
 landCloudColor: ffffffaa
+generator: {}
 
 mesh: {
   type: NoiseMesh
