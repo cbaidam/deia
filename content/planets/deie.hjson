@@ -1,0 +1,45 @@
+name: Deie
+description: Planeta podobná Zemi s oceány, kontinenty a bohatou atmosférou. Domov projektu Deia.
+parent: sun
+radius: 1
+sectorSize: 3
+
+alwaysUnlocked: true
+startSector: 0
+allowLaunchToNumbered: false
+hasAtmosphere: true
+atmosphereColor: 78b8ff
+atmosphereRadIn: 0.02
+atmosphereRadOut: 0.25
+iconColor: 4caf50
+landCloudColor: ffffffaa
+
+mesh: {
+  type: NoiseMesh
+  seed: 5
+  divisions: 6
+  radius: 1
+  octaves: 6
+  persistence: 0.5
+  scale: 1.4
+  mag: 0.25
+  color1: 3f9b4a
+  color2: 2a6bb5
+  colorOct: 5
+  colorPersistence: 0.55
+  colorScale: 2.0
+  colorThreshold: 0.5
+}
+
+cloudMesh: {
+  type: HexSkyMesh
+  seed: 2
+  speed: 0.2
+  radius: 1.08
+  divisions: 3
+  color: ffffffcc
+  octaves: 2
+  persistence: 0.55
+  scale: 6
+  thresh: 0.5
+}

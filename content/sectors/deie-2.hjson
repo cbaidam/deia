@@ -1,0 +1,12 @@
+name: Deie: Sektor 2
+description: Rozšiř těžbu a zajisti si zdroje dřeva a vody.
+planet: deie
+sector: 25
+difficulty: 4
+captureWave: 30
+startWaveTimeMultiplier: 2
+alwaysUnlocked: true
+requireUnlock: false
+addStartingItems: true
+allowLaunchLoadout: true
+

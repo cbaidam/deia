@@ -1,12 +1,3 @@
-function addDeiaMusic(){
-    const s = Vars.control.sound;
-    const m = Vars.tree.loadMusic("deia-theme"); // název souboru bez přípony
-    if(!s.ambientMusic.contains(m)) s.ambientMusic.add(m);
-}
-Events.on(MusicRegisterEvent, addDeiaMusic);
-Events.on(ClientLoadEvent, addDeiaMusic);
-
-
 // 1. Globální registrace tvého vlastního JS efektu zeleného kouře
 const bigGreenSmoke = new Effect(60, e => {
     Draw.color(Color.valueOf("2b8f3c"));

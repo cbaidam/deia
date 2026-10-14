@@ -1,0 +1,12 @@
+name: Deie: Sektor 4
+description: Poslední sektor Deie. Dokaž, že jsi zvládl celý projekt.
+planet: deie
+sector: 75
+difficulty: 8
+captureWave: 50
+startWaveTimeMultiplier: 2
+alwaysUnlocked: true
+requireUnlock: false
+addStartingItems: true
+allowLaunchLoadout: true
+isLastSector: true

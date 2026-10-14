@@ -1,0 +1,12 @@
+name: Deie: Sektor 3
+description: Silnější nepřátelé. Postav obranu a zvládni pokročilé suroviny.
+planet: deie
+sector: 50
+difficulty: 6
+captureWave: 40
+startWaveTimeMultiplier: 2
+alwaysUnlocked: true
+requireUnlock: false
+addStartingItems: true
+allowLaunchLoadout: true
+

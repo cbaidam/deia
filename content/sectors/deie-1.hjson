@@ -1,0 +1,12 @@
+name: Deie: Sektor 1
+description: První přistání na Deii. Zabezpeč základnu a přežij první vlny.
+planet: deie
+sector: 0
+difficulty: 2
+captureWave: 20
+startWaveTimeMultiplier: 2
+alwaysUnlocked: true
+requireUnlock: false
+addStartingItems: true
+allowLaunchLoadout: true
+
