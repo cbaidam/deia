@@ -13,4 +13,7 @@ requirements: [
 ]
 
 category: distribution
-research: titanium-conveyor
+
+research: {
+  parent: deia-core
+}

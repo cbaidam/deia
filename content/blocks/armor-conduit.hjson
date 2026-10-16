@@ -12,4 +12,7 @@ requirements: [
 ]
 
 category: liquid
-research: pulse-conduit
+
+research: {
+  parent: deia-core
+}

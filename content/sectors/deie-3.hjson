@@ -1,12 +1,19 @@
-name: Deie: Sektor 3
-description: Silnější nepřátelé. Postav obranu a zvládni pokročilé suroviny.
+name: Selefo
+description: Mapa se spoustou potůčků.
 planet: deie
 sector: 50
 difficulty: 6
 captureWave: 40
 startWaveTimeMultiplier: 2
-alwaysUnlocked: true
-requireUnlock: false
 addStartingItems: true
 allowLaunchLoadout: true
 
+research: {
+  parent: deie-2
+  objectives: [
+    {
+      type: SectorComplete
+      preset: deie-2
+    }
+  ]
+}

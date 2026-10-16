@@ -37,3 +37,7 @@ requirements: [
 ]
 
 category: units
+
+research: {
+  parent: cell-factory
+}

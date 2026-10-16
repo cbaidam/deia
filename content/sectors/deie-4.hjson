@@ -1,12 +1,20 @@
-name: Deie: Sektor 4
-description: Poslední sektor Deie. Dokaž, že jsi zvládl celý projekt.
+name: Maia
+description: Velmi zalesněná mapa. Převažují na ní jehličnany.
 planet: deie
 sector: 75
 difficulty: 8
 captureWave: 50
 startWaveTimeMultiplier: 2
-alwaysUnlocked: true
-requireUnlock: false
 addStartingItems: true
 allowLaunchLoadout: true
 isLastSector: true
+
+research: {
+  parent: deie-3
+  objectives: [
+    {
+      type: SectorComplete
+      preset: deie-3
+    }
+  ]
+}
