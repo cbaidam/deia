@@ -81,6 +81,8 @@ Events.on(ClientLoadEvent, () => {
         Log.warn("[JS Mod] Nepodařilo se najít blok uranium-distiller v HJSON.");
     }
 });
+if(unit != null && unit.hasStatus(StatusEffects.sapped)) {
+
 
 // ---------- 3. Na Deii je všechno ze Serpulu + obsah Deie ----------
 // a) Celý obsah Serpulu se zobrazí i na planetě Deie (build menu, databáze).

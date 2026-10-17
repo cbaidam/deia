@@ -1,0 +1,54 @@
+type: LiquidTurret
+name: "NeoThera"
+description: "Střílna, která chrlí agresivní kapalnou neoplasmu nebo žhavou strusku vysokou rychlostí na nepřítele."
+
+size: 4
+health: 1000
+range: 190
+ammoUseEffect: none
+maxAmmo: 50
+inaccuracy: 1
+rotateSpeed: 150
+reload: 5
+
+ammoTypes: {
+  neoplasm: {
+    type: LiquidBulletType
+    liquid: neoplasm
+    damage: 15          
+    speed: 4.5
+    knockback: 0.2      
+    puddleSize: 8       
+    status: sapped      
+    statusDuration: 150
+    
+    frontColor: 9e2b2b
+    backColor: 5e1b1b
+  }
+  slag: {
+    type: LiquidBulletType
+    liquid: slag
+    damage: 14          
+    speed: 4.5
+    knockback: 0.2      
+    puddleSize: 8       
+    status: melting     // TIP: Změněno ze sapped na melting (tavení), což je pro žhavou strusku (slag) nativní a logičtější efekt
+    statusDuration: 150
+    
+    // Barva střelby odpovídající žhavé lávové strusce (oranžovo-červená)
+    frontColor: ffa500
+    backColor: ff4500
+  } // OPRAVENO: Zde chyběla uzavírací závorka pro munici slag
+} // OPRAVENO: Zde chyběla druhá uzavírací závorka pro celý blok ammoTypes
+
+requirements: [
+  lead/5
+  titanium/10
+  copper/40
+]
+
+category: turret
+
+research: {
+  parent: deia-core
+}
