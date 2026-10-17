@@ -24,3 +24,7 @@ requirements: [
 ]
 
 category: crafting
+
+research: {
+  parent: mineral-mill
+}

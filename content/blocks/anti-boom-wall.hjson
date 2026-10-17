@@ -17,4 +17,7 @@ requirements: [
 ]
 
 category: defense
-research: thorium-wall
+
+research: {
+  parent: lighter
+}

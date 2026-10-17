@@ -27,4 +27,7 @@ requirements: [
 ]
 
 category: crafting
-research: water
+
+research: {
+  parent: water-turbine
+}

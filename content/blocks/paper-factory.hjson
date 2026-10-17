@@ -40,4 +40,7 @@ requirements: [
 ]
 
 category: crafting
-research: wood_extractor
+
+research: {
+  parent: papirna
+}

@@ -89,4 +89,7 @@ requirements: [
 ]
 
 category: turret
-research: duo
+
+research: {
+  parent: Tera-A
+}

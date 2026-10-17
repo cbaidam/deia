@@ -58,3 +58,7 @@ requirements: [
 ]
 
 category: crafting
+
+research: {
+  parent: oxide-chamber
+}

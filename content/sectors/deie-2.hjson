@@ -1,12 +1,19 @@
-name: Deie: Sektor 2
+name: Efrakto
 description: Rozšiř těžbu a zajisti si zdroje dřeva a vody.
 planet: deie
 sector: 25
 difficulty: 4
 captureWave: 30
 startWaveTimeMultiplier: 2
-alwaysUnlocked: true
-requireUnlock: false
 addStartingItems: true
 allowLaunchLoadout: true
 
+research: {
+  parent: deie-1
+  objectives: [
+    {
+      type: SectorComplete
+      preset: deie-1
+    }
+  ]
+}

@@ -31,4 +31,7 @@ requirements: [
 ]
 
 category: crafting
-research: wood_extractor
+
+research: {
+  parent: wood_extractor
+}

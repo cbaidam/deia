@@ -29,4 +29,7 @@ requirements: [
 ]
 
 category: power
-research: combustion-generator
+
+research: {
+  parent: spalovna
+}

@@ -13,4 +13,7 @@ requirements: [
 ]
 
 category: distribution
-research: armor-conveyor
+
+research: {
+  parent: armor-conveyor
+}

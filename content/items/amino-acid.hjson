@@ -11,3 +11,7 @@ shownPlanets: [
   serpulo
   erekir
 ]
+
+research: {
+  parent: amino-synthesizer
+}

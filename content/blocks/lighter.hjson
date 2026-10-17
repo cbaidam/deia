@@ -55,4 +55,7 @@ requirements: [
 ]
 
 category: turret
-research: duo
+
+research: {
+  parent: deia-core
+}

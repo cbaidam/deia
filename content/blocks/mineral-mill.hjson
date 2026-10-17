@@ -30,3 +30,7 @@ requirements: [
 ]
 
 category: crafting
+
+research: {
+  parent: deia-core
+}
