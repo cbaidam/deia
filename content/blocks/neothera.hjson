@@ -8,17 +8,17 @@ range: 190
 ammoUseEffect: none
 maxAmmo: 50
 inaccuracy: 1
-rotateSpeed: 150
-reload: 5
+rotateSpeed: 2
+reload: 0.1
 
 ammoTypes: {
   neoplasm: {
     type: LiquidBulletType
     liquid: neoplasm
-    damage: 15          
+    damage: 100          
     speed: 4.5
     knockback: 0.2      
-    puddleSize: 8       
+    puddleSize: 9       
     status: sapped      
     statusDuration: 150
     
@@ -28,7 +28,7 @@ ammoTypes: {
   slag: {
     type: LiquidBulletType
     liquid: slag
-    damage: 14          
+    damage: 58          
     speed: 4.5
     knockback: 0.2      
     puddleSize: 8       

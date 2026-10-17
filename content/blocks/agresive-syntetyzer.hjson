@@ -1,0 +1,73 @@
+type: GenericCrafter
+name: "Biosyntetyzér agresivních látek"
+size: 3
+health: 500
+craftTime: 80
+
+craftEffect: {
+  type: ParticleEffect
+  particles: 8          
+  length: 14            
+  lifetime: 45          
+  cone: 360             
+  colorFrom: 9e2b2b     
+  colorTo: 421212       
+  sizeFrom: 3.5         
+  sizeTo: 0.5           
+}
+
+category: crafting
+
+hasPower: true
+hasItems: true
+hasLiquids: true
+
+consumes: {
+  power: 1.5
+  liquids: [
+    {
+      liquid: cells
+      amount: 0.025
+    }
+    {
+      liquid: oxygen
+      amount: 0.03
+    }
+  ]
+  items: [
+    spore-pod/10
+  ]
+}
+
+outputLiquid: neoplasm/0.083
+
+// VYKRESLOVÁNÍ VRSTEV (SPRAVUJE TEXTURY -fan A -top)
+drawer: {
+  type: DrawMulti
+  drawers: [
+    // 1. Spodní vrstva: Základní budova (textura: amino-synthesizer)
+    {
+      type: DrawDefault
+    }
+    // 2. Prostřední vrstva: Rotující větrák (textura: amino-synthesizer-fan)
+    {
+      type: DrawBlurSpin
+      suffix: "-fan"
+      rotateSpeed: 4.5    // Rychlost otáčení větráku
+      blurThresh: 0.01
+    }
+    // 3. Vrchní vrstva: Statický kryt/trubky (textura: amino-synthesizer-top)
+    {
+      type: DrawRegion
+      suffix: "-top"
+    }
+  ]
+}
+
+requirements: [
+  copper/35
+  surge-alloy/50
+  silicon/20
+]
+
+research: pyratite-mixer
