@@ -12,4 +12,4 @@ Changeolg:
 * v1.8BugFix | Bug fixes.
 * v1.9       | New research tree.
 * v1.9BugFix | Bug fixes and new description.
-
+* v1.10      | New turret.
