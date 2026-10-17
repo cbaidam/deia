@@ -11,4 +11,5 @@ Changeolg:
 * v1.8       | New planet.
 * v1.8BugFix | Bug fixes.
 * v1.9       | New research tree.
+* v1.9BugFix | Bug fixes and new description.
 
