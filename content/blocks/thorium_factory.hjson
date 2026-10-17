@@ -8,12 +8,23 @@ category: crafting
 
 hasPower: true
 hasItems: true
+hasLiquids: true
+liquidCapacity: 20
 
 consumes: {
   power: 1.5
   items: [
-    titanium/4
-    pyratite/10
+    copper/4
+  ]
+  liquids: [
+    {
+      liquid: radiation
+      amount: 0.1
+    }
+    {
+      liquid: cryofluid
+      amount: 0.1
+    }
   ]
 }
 
@@ -26,4 +37,7 @@ requirements: [
 ]
 
 category: crafting
-research: pyratite-mixer
+
+research: {
+  parent: uranium-distiller
+}

@@ -1,0 +1,7 @@
+name: Antineoplazma
+description: Kapalina, která ničí neoplazmu. Vyrábí se v Laboratoři antineoplazmy a střílí ji Lékař.
+color: 4fd1c5
+
+research: {
+  parent: anti-neoplasm-lab
+}

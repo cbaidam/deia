@@ -1,0 +1,45 @@
+type: GenericCrafter
+name: Laboratoř antineoplazmy
+description: Z fosforu, vody a kyslíku vyrábí Antineoplazmu, která ničí neoplazmu.
+size: 2
+health: 300
+craftTime: 60
+hasPower: true
+hasItems: true
+hasLiquids: true
+liquidCapacity: 40
+
+consumes: {
+  power: 1.0
+  items: [
+    phosphorus/1
+  ]
+  liquids: [
+    {
+      liquid: water
+      amount: 0.1
+    }
+    {
+      liquid: oxygen
+      amount: 0.05
+    }
+  ]
+}
+
+outputLiquid: {
+  liquid: anti-neoplasm
+  amount: 0.1
+}
+
+requirements: [
+  copper/60
+  lead/50
+  graphite/40
+  silicon/30
+]
+
+category: crafting
+
+research: {
+  parent: doctor
+}

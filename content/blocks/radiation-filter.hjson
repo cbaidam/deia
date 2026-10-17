@@ -1,0 +1,33 @@
+type: GenericCrafter
+name: Radiační filtr
+description: Zachycuje radiaci ze vzduchu a posílá ji do Radiační trubice. Při radiačním výbuchu (např. Thoriový reaktor) produkce prudce vzroste a pomalu klesá k normálu. Zmírňuje také poškození okolních budov.
+size: 2
+health: 300
+craftTime: 60
+hasPower: true
+hasLiquids: true
+liquidCapacity: 200
+
+consumes: {
+  power: 0.6
+}
+
+// běžná produkce radiace ze vzduchu (za tick)
+outputLiquid: {
+  liquid: radiation
+  amount: 0.06
+}
+
+requirements: [
+  lead/60
+  graphite/40
+  silicon/40
+  metaglass/30
+  titanium/20
+]
+
+category: crafting
+
+research: {
+  parent: spalovna
+}

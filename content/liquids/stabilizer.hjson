@@ -1,0 +1,7 @@
+name: Stabilizátor neoplazmy
+description: Kapalina, která neoplazmu změní na prospěšnou. Vyrábí se v Syntetizéru stabilizátoru a střílí ji Lékař.
+color: f4d35e
+
+research: {
+  parent: stabilizer-synth
+}

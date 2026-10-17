@@ -1,0 +1,8 @@
+name: Radiace
+description: Nebezpečné záření zachycené z ovzduší. Dopravuje se Radiační trubicí.
+color: b6e000
+gas: true
+
+research: {
+  parent: radiation-filter
+}

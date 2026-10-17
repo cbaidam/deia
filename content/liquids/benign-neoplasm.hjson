@@ -1,0 +1,9 @@
+name: Prospěšná neoplazma
+description: Neoplazma upravená Stabilizátorem. Posiluje jednotky a hojí budovy, na kterých leží.
+color: 6bd16f
+effect: shielded
+viscosity: 0.8
+
+research: {
+  parent: stabilizer
+}

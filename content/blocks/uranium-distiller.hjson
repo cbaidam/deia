@@ -16,10 +16,16 @@ consumes: {
   items: [
     wood/2
   ]
-  liquid: {
-    liquid: water
-    amount: 0.2
-  }
+  liquids: [
+    {
+      liquid: water
+      amount: 0.2
+    }
+    {
+      liquid: radiation
+      amount: 0.1
+    }
+  ]
 }
 
 drawer: {
@@ -50,5 +56,5 @@ requirements: [
 ]
 
 research: {
-  parent: spalovna
+  parent: radiation-filter
 }

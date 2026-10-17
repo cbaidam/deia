@@ -13,3 +13,5 @@ Changeolg:
 * v1.9       | New research tree.
 * v1.9BugFix | Bug fixes and new description.
 * v1.10      | New turret.
+* v1.10Neopl.| New block "doctor".
+

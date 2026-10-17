@@ -1,0 +1,18 @@
+type: Conduit
+name: Radiační trubice
+description: Potrubí na radiaci. Radiaci z Radiačního filtru vede do spotřebičů.
+health: 90
+liquidCapacity: 14
+liquidPressure: 1.0
+
+requirements: [
+  lead/3
+  graphite/2
+  metaglass/1
+]
+
+category: liquid
+
+research: {
+  parent: radiation-filter
+}

@@ -60,7 +60,7 @@ Events.on(ClientLoadEvent, () => {
                 }
 
                 // NEBEZPEČNÁ MECHANIKA: v budově je materiál, ale došla voda
-                if(this.liquids.currentAmount() <= 0.01 && this.items.total() > 0){
+                if(this.liquids.get(Liquids.water) <= 0.01 && this.items.total() > 0){
                     // varovný výbuch jen občas (ne v každém snímku)
                     if(Mathf.chance(0.05)){
                         Fx.reactorExplosion.at(this.x + Mathf.range(8), this.y + Mathf.range(8));
@@ -81,7 +81,7 @@ Events.on(ClientLoadEvent, () => {
         Log.warn("[JS Mod] Nepodařilo se najít blok uranium-distiller v HJSON.");
     }
 });
-if(unit != null && unit.hasStatus(StatusEffects.sapped)) {
+// TODO (neoplazma, rozpracováno): if(unit != null && unit.hasStatus(StatusEffects.sapped)) { ... (nedokončený blok zakomentován, aby se skript načetl)
 
 
 // ---------- 3. Na Deii je všechno ze Serpulu + obsah Deie ----------
@@ -133,4 +133,142 @@ Events.on(ClientLoadEvent, () => {
     serpuloRoot.addPlanet(deie); // obsah Serpulu bude viditelný i na Deii
 
     Log.info("[JS Mod] Strom Serpulu připojen pod kořen Deie.");
+});
+
+// ---------- 5. Radiační filtr ----------
+// Normálně sbírá z ovzduší trochu radiace (hjson). Po radiačním výbuchu (Thoriový reaktor, Rázový reaktor,
+// Uranový destilátor) produkce prudce stoupne a pomalu klesá k normálu. Filtr také zmírní poškození okolí.
+const radSurge = {}; // pozice budovy -> aktuální násobek produkce navíc
+
+Events.on(ClientLoadEvent, () => {
+    const filterBlock = Vars.content.getByName(ContentType.block, "deia-radiation-filter");
+    const radiation = Vars.content.getByName(ContentType.liquid, "deia-radiation");
+    if(filterBlock == null || radiation == null){
+        Log.warn("[JS Mod] Radiační filtr nebo radiace nenalezeny v HJSON.");
+        return;
+    }
+
+    const BASE = 0.06;          // běžná produkce za tick (stejná jako v hjson)
+    const DECAY = 0.9996;       // pomalý pokles k normálu (poločas cca 30 s)
+
+    filterBlock.buildType = () => extend(GenericCrafter.GenericCrafterBuild, filterBlock, {
+        updateTile(){
+            this.super$updateTile();
+            const k = this.pos();
+            let surge = radSurge[k];
+            if(surge === undefined) return;
+            if(surge < 0.01){ delete radSurge[k]; return; }
+
+            if(this.efficiency > 0){
+                const room = filterBlock.liquidCapacity - this.liquids.get(radiation);
+                const add = Math.min(room, BASE * surge * Time.delta);
+                if(add > 0) this.liquids.add(radiation, add);
+            }
+            radSurge[k] = surge * Math.pow(DECAY, Time.delta);
+            this.dumpLiquid(radiation);
+        }
+    });
+
+    const SURGE_PEAK = 40;           // špičkový násobek produkce po výbuchu
+    const SURGE_RANGE = 100 * 8;     // filtry do 100 polí od výbuchu zareagují
+    const PROTECT_RANGE = 25 * 8;    // filtr chrání budovy do 25 polí od sebe
+    const BLAST_RANGE = 30 * 8;      // poloměr, ve kterém se škody počítají
+    const MITIGATE = 0.6;            // podíl ztraceného zdraví, který se vrátí
+
+    Events.on(BlockDestroyEvent, e => {
+        const t = e.tile;
+        if(t == null) return;
+        const blk = t.block();
+        const isRad = blk instanceof Packages.mindustry.world.blocks.power.NuclearReactor
+            || blk instanceof Packages.mindustry.world.blocks.power.ImpactReactor
+            || blk.name == "deia-uranium-distiller";
+        if(!isRad) return;
+
+        const x = t.worldx(), y = t.worldy();
+        const filters = [];
+        Groups.build.each(b => {
+            if(b.block == filterBlock && b.dst(x, y) <= SURGE_RANGE) filters.push(b);
+        });
+        if(filters.length == 0) return;
+
+        filters.forEach(f => { radSurge[f.pos()] = Math.max(radSurge[f.pos()] || 0, SURGE_PEAK); });
+
+        // zmírnění: zapamatujeme zdraví, po výbuchu vrátíme část ztraceného
+        const prot = [];
+        Groups.build.each(b => {
+            if(b.dst(x, y) > BLAST_RANGE) return;
+            for(let i = 0; i < filters.length; i++){
+                if(filters[i].team == b.team && filters[i].dst(b) <= PROTECT_RANGE){
+                    prot.push([b, b.health]);
+                    return;
+                }
+            }
+        });
+        Time.run(2, () => {
+            prot.forEach(p => {
+                const b = p[0];
+                const lost = p[1] - b.health;
+                if(b.isValid() && lost > 0) b.heal(lost * MITIGATE);
+            });
+        });
+    });
+});
+
+// ---------- 6. Lékař proti neoplazmě ----------
+// Antineoplazma: louže neoplazmy v jejím dosahu zničí.
+// Stabilizátor: louže neoplazmy přemění na Prospěšnou neoplazmu (hojí budovy, posiluje jednotky).
+Events.on(ClientLoadEvent, () => {
+    const anti = Vars.content.getByName(ContentType.liquid, "deia-anti-neoplasm");
+    const stab = Vars.content.getByName(ContentType.liquid, "deia-stabilizer");
+    const benign = Vars.content.getByName(ContentType.liquid, "deia-benign-neoplasm");
+    if(anti == null || stab == null || benign == null){
+        Log.warn("[JS Mod] Kapaliny proti neoplazmě nenalezeny v HJSON.");
+        return;
+    }
+    const REACH = 18;      // dosah reakce mezi loužemi (jednotky světa)
+    const PERIOD = 20;     // jak často se louže kontrolují (snímky)
+    const HEAL = 3;        // kolik zdraví hojí Prospěšná neoplazma budovám na louži za kontrolu
+    let timer = 0;
+
+    Events.run(Trigger.update, () => {
+        if(!Vars.state.isGame()) return;
+        timer += Time.delta;
+        if(timer < PERIOD) return;
+        timer = 0;
+
+        const neo = [], cures = [], goods = [];
+        Groups.puddle.each(p => {
+            if(p.liquid == Liquids.neoplasm) neo.push(p);
+            else if(p.liquid == anti || p.liquid == stab) cures.push(p);
+            else if(p.liquid == benign) goods.push(p);
+        });
+
+        neo.forEach(np => {
+            for(let i = 0; i < cures.length; i++){
+                const c = cures[i];
+                if(c.amount <= 0.05 || np.dst(c) > REACH) continue;
+                const used = Math.min(c.amount, np.amount * 0.5 + 0.3);
+                const tile = Vars.world.tileWorld(np.x, np.y);
+                if(c.liquid == anti){
+                    // zničení: neoplazma ubývá, dokud se louže nevypaří
+                    np.amount -= used * 2;
+                    c.amount -= used;
+                    if(np.amount <= 0.1) np.remove();
+                }else{
+                    // úprava: neoplazma se změní na prospěšnou
+                    const amt = np.amount;
+                    c.amount -= used;
+                    np.remove();
+                    if(tile != null) Puddles.deposit(tile, benign, amt * 0.8);
+                }
+                break;
+            }
+        });
+
+        // Prospěšná neoplazma hojí budovy, na kterých leží
+        goods.forEach(g => {
+            const t = Vars.world.tileWorld(g.x, g.y);
+            if(t != null && t.build != null) t.build.heal(HEAL);
+        });
+    });
 });
