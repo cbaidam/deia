@@ -152,6 +152,11 @@ Events.on(ClientLoadEvent, () => {
     const DECAY = 0.9996;       // pomalý pokles k normálu (poločas cca 30 s)
 
     filterBlock.buildType = () => extend(GenericCrafter.GenericCrafterBuild, filterBlock, {
+        // radiace smí z filtru jen do radiačních bloků, ne do klasických potrubí
+        transferLiquid(next, amount, liquid){
+            if(liquid == radiation && !radOk(next)) return 0;
+            return this.super$transferLiquid(next, amount, liquid);
+        },
         updateTile(){
             this.super$updateTile();
             const k = this.pos();
@@ -271,4 +276,44 @@ Events.on(ClientLoadEvent, () => {
             if(t != null && t.build != null) t.build.heal(HEAL);
         });
     });
+});
+
+// ---------- 7. Radiace nejde klasickým potrubím ----------
+// Seznam bloků, které smí radiaci přijímat a předávat (další spotřebiče sem můžeš doplnit).
+const RAD_OK = [
+    "deia-radiation-filter", "deia-radiation-tube", "deia-radiation-tank", "deia-radiation-bridge",
+    "deia-uranium-distiller", "deia-thorium_factory"
+];
+function radOk(b){
+    return b != null && RAD_OK.indexOf(b.block.name) >= 0;
+}
+
+Events.on(ClientLoadEvent, () => {
+    const radiation = Vars.content.getByName(ContentType.liquid, "deia-radiation");
+    if(radiation == null) return;
+
+    // Radiační trubice, sklad a most: přijímají JEN radiaci a posílají ji JEN do radiačních bloků.
+    function radiationOnly(blockName, buildClass){
+        const blk = Vars.content.getByName(ContentType.block, blockName);
+        if(blk == null){
+            Log.warn("[JS Mod] Blok " + blockName + " nenalezen v HJSON.");
+            return;
+        }
+        blk.buildType = () => extend(buildClass, blk, {
+            acceptLiquid(source, liquid){
+                return liquid == radiation && this.super$acceptLiquid(source, liquid);
+            },
+            transferLiquid(next, amount, liquid){
+                if(liquid == radiation && !radOk(next)) return 0;
+                return this.super$transferLiquid(next, amount, liquid);
+            },
+            moveLiquid(next, liquid){
+                if(liquid == radiation && !radOk(next)) return 0;
+                return this.super$moveLiquid(next, liquid);
+            }
+        });
+    }
+    radiationOnly("deia-radiation-tube", Conduit.ConduitBuild);
+    radiationOnly("deia-radiation-tank", LiquidRouter.LiquidRouterBuild);
+    radiationOnly("deia-radiation-bridge", LiquidBridge.LiquidBridgeBuild);
 });

@@ -1,0 +1,22 @@
+type: LiquidBridge
+name: Most pro radiaci
+description: Přenáší radiaci vzduchem až na 8 polí. Radiace nejde klasickými potrubími ani mosty, jen Radiačními.
+size: 1
+health: 120
+range: 8
+liquidCapacity: 20
+hasPower: false
+fadeIn: false
+moveArrows: false
+
+requirements: [
+  graphite/8
+  lead/12
+  metaglass/10
+]
+
+category: liquid
+
+research: {
+  parent: radiation-tube
+}

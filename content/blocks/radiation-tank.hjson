@@ -1,0 +1,20 @@
+type: LiquidRouter
+name: Sklad radiace
+description: Velká nádrž na radiaci. Přijímá a vydává jen radiaci, jen do Radiačních trubic, mostů a spotřebičů radiace.
+size: 3
+health: 600
+liquidCapacity: 1500
+solid: true
+
+requirements: [
+  lead/80
+  graphite/40
+  metaglass/60
+  titanium/30
+]
+
+category: liquid
+
+research: {
+  parent: radiation-tube
+}
