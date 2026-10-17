@@ -4,3 +4,7 @@ color: e57399
 viscosity: 0.6
 flammability: 0.9
 radioactivity: 0.5
+
+research: {
+  parent: cell-factory
+}

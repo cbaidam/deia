@@ -27,4 +27,7 @@ requirements: [
 ]
 
 category: units
-research: additive-reconstructor
+
+research: {
+  parent: ednio-factory
+}

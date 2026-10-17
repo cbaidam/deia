@@ -13,4 +13,7 @@ requirements: [
 ]
 
 category: liquid
-research: armor-conduit
+
+research: {
+  parent: armor-conduit
+}

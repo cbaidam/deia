@@ -32,4 +32,7 @@ requirements: [
 ]
 
 category: units
-research: ednio-recon-3
+
+research: {
+  parent: ednio-recon-3
+}

@@ -1,4 +1,4 @@
-name: Deie: Sektor 1
+name: Deia
 description: První přistání na Deii. Zabezpeč základnu a přežij první vlny.
 planet: deie
 sector: 0
@@ -10,3 +10,6 @@ requireUnlock: false
 addStartingItems: true
 allowLaunchLoadout: true
 
+research: {
+  parent: deia-core
+}

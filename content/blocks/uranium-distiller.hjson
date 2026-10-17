@@ -5,7 +5,7 @@ description: "Využívá kontrolovanou radiaci k přeměně dřeva a vody na tho
 size: 2
 health: 800
 category: crafting
-research: kiln
+
 
 hasItems: true
 hasLiquids: true
@@ -48,3 +48,7 @@ requirements: [
   copper/100
   silicon/40
 ]
+
+research: {
+  parent: spalovna
+}

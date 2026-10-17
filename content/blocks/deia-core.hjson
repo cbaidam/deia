@@ -16,3 +16,9 @@ requirements: [
 
 category: effect
 alwaysUnlocked: true
+
+research: {
+  root: true
+  planet: deie
+  name: Deie
+}

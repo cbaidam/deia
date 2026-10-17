@@ -8,7 +8,7 @@ health: 40
 armor: 10            
 
 category: defense    
-research: copper-wall
+
 
 requirements: [
   copper/30
@@ -36,4 +36,8 @@ destroyBullet: {
   // Bonus: Výbuch zapálí zem kolem sebe
   incendAmount: 5
   incendSpread: 40
+}
+
+research: {
+  parent: anti-boom-wall
 }

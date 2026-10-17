@@ -17,4 +17,7 @@ requirements: [
 ]
 
 category: production
-research: mechanical-drill
+
+research: {
+  parent: deia-core
+}

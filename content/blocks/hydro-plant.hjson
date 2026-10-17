@@ -26,4 +26,7 @@ requirements: [
 ]
 
 category: power
-research: water-turbine
+
+research: {
+  parent: water-turbine
+}
