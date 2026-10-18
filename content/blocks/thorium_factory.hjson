@@ -1,15 +1,28 @@
 type: GenericCrafter
 name: "Thoriová továrna"
-size: 1
-health: 60
+size: 2
+health: 80
 craftTime: 100
-craftEffect: pulverize
+craftEffect: {
+  type: ParticleEffect
+  particles: 98
+  length: 108
+  lifetime: 1.5
+  drag: 0.0001
+  cone: 2
+  colorFrom: 97B31D
+  colorTo: B09123
+  sizeFrom: 0.8
+  sizeTo: 5.1
+}
+
 category: crafting
 
 hasPower: true
 hasItems: true
 hasLiquids: true
 liquidCapacity: 20
+itemCapacity: 100
 
 consumes: {
   power: 1.5
