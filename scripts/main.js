@@ -317,3 +317,32 @@ Events.on(ClientLoadEvent, () => {
     radiationOnly("deia-radiation-tank", LiquidRouter.LiquidRouterBuild);
     radiationOnly("deia-radiation-bridge", LiquidBridge.LiquidBridgeBuild);
 });
+
+// ---------- 8. Lékař míří na ty, kdo ho potřebují ----------
+// Vanilla turret s targetHealing míří na poškozené spojenecké budovy. Navíc míří na budovy u louží neoplazmy.
+Events.on(ClientLoadEvent, () => {
+    const doc = Vars.content.getByName(ContentType.block, "deia-doctor");
+    if(doc == null){
+        Log.warn("[JS Mod] Lékař (deia-doctor) nenalezen v HJSON.");
+        return;
+    }
+    doc.buildType = () => extend(LiquidTurret.LiquidTurretBuild, doc, {
+        findTarget(){
+            this.super$findTarget();
+            if(this.target != null) return;
+
+            // nakažené: nejbližší vlastní budova u louže neoplazmy
+            const range = this.range();
+            let best = null, bestDst = 1e9;
+            Groups.puddle.each(p => {
+                if(p.liquid != Liquids.neoplasm || p.dst(this) > range) return;
+                const b = Vars.indexer.findTile(this.team, p.x, p.y, 24, bb => bb != this);
+                if(b != null){
+                    const d = p.dst(b);
+                    if(d < bestDst){ bestDst = d; best = b; }
+                }
+            });
+            if(best != null) this.target = best;
+        }
+    });
+});

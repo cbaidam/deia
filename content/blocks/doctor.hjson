@@ -4,6 +4,10 @@ description: Střílí Antineoplazmu, která neoplazmu zničí, nebo Stabilizát
 size: 3
 health: 900
 range: 190
+targetHealing: true   // automaticky míří na poškozené spojence
+targetAir: false      // nestřílí na nepřátele
+targetGround: false
+extinguish: false     // neplýtvá léčivem na hašení
 liquidCapacity: 60
 ammoUseEffect: none
 inaccuracy: 2
@@ -19,6 +23,8 @@ ammoTypes: {
     knockback: 0.1
     puddleSize: 10
     orbSize: 4
+    collidesTeam: true
+    healPercent: 3
   }
   stabilizer: {
     type: LiquidBulletType
@@ -28,6 +34,8 @@ ammoTypes: {
     knockback: 0.1
     puddleSize: 10
     orbSize: 4
+    collidesTeam: true
+    healPercent: 3
   }
 }
 
@@ -39,7 +47,7 @@ requirements: [
   titanium/30
 ]
 
-category: turret
+category: effect
 
 research: {
   parent: neothera
