@@ -343,7 +343,7 @@ Events.on(ClientLoadEvent, () => {
 });
 
 // ---------- 8. Lékař míří na ty, kdo ho potřebují ----------
-// 1) Míří na nejvíc poškozené vlastní budovy a na budovy u louží neoplazmy.
+// 1) Míří JEN na budovy u louží neoplazmy (infekce). Obyčejně poškozené budovy neléčí.
 // 2) Co vyléčí, to je na 10 s IMUNNÍ: neoplazma v jejím okolí zmizí a Lékař se přesune k dalšímu cíli.
 // 3) Lékař sám je vůči neoplazmě imunní.
 const doctorImmune = {};   // pozice budovy -> kdy imunita končí (Time.time)
@@ -385,18 +385,10 @@ Events.on(ClientLoadEvent, () => {
     doc.buildType = () => extend(LiquidTurret.LiquidTurretBuild, doc, {
         findTarget(){
             const range = this.range();
-            let best = null, bestScore = -1;
+            let best = null;
 
-            // 1) nejvíc poškozená vlastní budova, která není imunní
-            Vars.indexer.eachBlock(this.team, this.x, this.y, range,
-                b => b != this && b.damaged() && !isImmune(b),
-                b => {
-                    const score = 1 - b.health / b.maxHealth;
-                    if(score > bestScore){ bestScore = score; best = b; }
-                });
-
-            // 2) budova poblíž louže neoplazmy (nejbližší), která není imunní
-            if(best == null){
+            // jen budova poblíž louže neoplazmy (nejbližší), která není imunní
+            {
                 let bestDst = 1e9;
                 Groups.puddle.each(p => {
                     if(p.liquid != Liquids.neoplasm || p.dst(this) > range) return;
