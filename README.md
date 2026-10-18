@@ -17,4 +17,5 @@ Changeolg:
 * v1.10Respr.| New sprite(s).
 * v1.10BugFix| Bug fixes.
 * v1.11      | New turret.
+* v1.11Respr.| Resprited.
 
