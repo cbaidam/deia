@@ -1,0 +1,94 @@
+type: ItemTurret
+name: Šíp
+description: Střílí samonaváděné rakety s extrémním zatáčením. Raketa se přilepí na cíl a skoro ji nejde minout.
+size: 2
+health: 700
+range: 270
+reload: 22
+rotateSpeed: 9
+inaccuracy: 6
+maxAmmo: 30
+targetAir: true
+targetGround: true
+shootSound: missile
+ammoUseEffect: casing1
+
+shoot: {
+  shots: 2
+  shotDelay: 5
+}
+
+ammoTypes: {
+  graphite: {
+    type: MissileBulletType
+    speed: 3.2
+    damage: 18
+    splashDamage: 30
+    splashDamageRadius: 26
+    lifetime: 90
+    width: 8
+    height: 10
+    homingPower: 0.7
+    homingRange: 220
+    trailLength: 14
+    trailWidth: 1.8
+    trailColor: ffd37f
+    frontColor: ffd37f
+    backColor: c78f3a
+    ammoMultiplier: 3
+    shootEffect: shootSmall
+  }
+  silicon: {
+    type: MissileBulletType
+    speed: 3.6
+    damage: 20
+    splashDamage: 36
+    splashDamageRadius: 28
+    lifetime: 90
+    width: 8
+    height: 10
+    homingPower: 1.2
+    homingRange: 260
+    trailLength: 16
+    trailWidth: 1.8
+    trailColor: 9bd0ff
+    frontColor: 9bd0ff
+    backColor: 4f7fb5
+    ammoMultiplier: 4
+    reloadMultiplier: 1.2
+    shootEffect: shootSmall
+  }
+  blast-compound: {
+    type: MissileBulletType
+    speed: 3.0
+    damage: 20
+    splashDamage: 90
+    splashDamageRadius: 48
+    lifetime: 100
+    width: 9
+    height: 12
+    homingPower: 0.9
+    homingRange: 240
+    trailLength: 16
+    trailWidth: 2.2
+    trailColor: ff7a59
+    frontColor: ff7a59
+    backColor: b8402a
+    ammoMultiplier: 2
+    status: blasted
+    shootEffect: shootSmall
+  }
+}
+
+requirements: [
+  copper/100
+  graphite/80
+  silicon/60
+  titanium/40
+]
+
+category: turret
+
+research: {
+  parent: lighter
+}

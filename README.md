@@ -16,4 +16,5 @@ Changeolg:
 * v1.10Neopl.| New block "doctor".
 * v1.10Respr.| New sprite(s).
 * v1.10BugFix| Bug fixes.
+* v1.11      | New turret.
 
