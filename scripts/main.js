@@ -139,6 +139,8 @@ Events.on(ClientLoadEvent, () => {
 // Normálně sbírá z ovzduší trochu radiace (hjson). Po radiačním výbuchu (Thoriový reaktor, Rázový reaktor,
 // Uranový destilátor) produkce prudce stoupne a pomalu klesá k normálu. Filtr také zmírní poškození okolí.
 const radSurge = {}; // pozice budovy -> aktuální násobek produkce navíc
+const radShield = {}; // pozice filtru -> do kdy je imunní vůči výbuchu (Time.time)
+const reactorOrig = {}; // název bloku -> původní [explosionDamage, explosionRadius]
 
 Events.on(ClientLoadEvent, () => {
     const filterBlock = Vars.content.getByName(ContentType.block, "deia-radiation-filter");
@@ -152,6 +154,12 @@ Events.on(ClientLoadEvent, () => {
     const DECAY = 0.9996;       // pomalý pokles k normálu (poločas cca 30 s)
 
     filterBlock.buildType = () => extend(GenericCrafter.GenericCrafterBuild, filterBlock, {
+        // během radiačního výbuchu je filtr nezranitelný (výbuch ho nezničí, jen mu zvýší produkci)
+        handleDamage(amount){
+            const until = radShield[this.pos()];
+            if(until !== undefined && until > Time.time) return 0;
+            return this.super$handleDamage(amount);
+        },
         // radiace smí z filtru jen do radiačních bloků, ne do klasických potrubí
         transferLiquid(next, amount, liquid){
             if(liquid == radiation && !radOk(next)) return 0;
@@ -197,6 +205,22 @@ Events.on(ClientLoadEvent, () => {
         if(filters.length == 0) return;
 
         filters.forEach(f => { radSurge[f.pos()] = Math.max(radSurge[f.pos()] || 0, SURGE_PEAK); });
+        filters.forEach(f => { radShield[f.pos()] = Time.time + 180; });
+
+        // zmírnění: reaktor vybuchne s menší silou a dosahem (hodnoty se hned vrátí zpět)
+        if(typeof blk.explosionDamage === "number" && blk.explosionDamage > 0 && reactorOrig[blk.name] === undefined){
+            reactorOrig[blk.name] = [blk.explosionDamage, blk.explosionRadius];
+            blk.explosionDamage = Math.max(1, Math.floor(blk.explosionDamage * 0.2));
+            blk.explosionRadius = Math.max(1, Math.floor(blk.explosionRadius * 0.7));
+            Time.run(3, () => {
+                const o = reactorOrig[blk.name];
+                if(o !== undefined){
+                    blk.explosionDamage = o[0];
+                    blk.explosionRadius = o[1];
+                    delete reactorOrig[blk.name];
+                }
+            });
+        }
 
         // zmírnění: zapamatujeme zdraví, po výbuchu vrátíme část ztraceného
         const prot = [];
@@ -319,30 +343,116 @@ Events.on(ClientLoadEvent, () => {
 });
 
 // ---------- 8. Lékař míří na ty, kdo ho potřebují ----------
-// Vanilla turret s targetHealing míří na poškozené spojenecké budovy. Navíc míří na budovy u louží neoplazmy.
+// 1) Míří na nejvíc poškozené vlastní budovy a na budovy u louží neoplazmy.
+// 2) Co vyléčí, to je na 10 s IMUNNÍ: neoplazma v jejím okolí zmizí a Lékař se přesune k dalšímu cíli.
+// 3) Lékař sám je vůči neoplazmě imunní.
+const doctorImmune = {};   // pozice budovy -> kdy imunita končí (Time.time)
+function isImmune(b){
+    const until = doctorImmune[b.pos()];
+    return until !== undefined && until > Time.time;
+}
+
 Events.on(ClientLoadEvent, () => {
     const doc = Vars.content.getByName(ContentType.block, "deia-doctor");
-    if(doc == null){
-        Log.warn("[JS Mod] Lékař (deia-doctor) nenalezen v HJSON.");
+    const anti = Vars.content.getByName(ContentType.liquid, "deia-anti-neoplasm");
+    const stab = Vars.content.getByName(ContentType.liquid, "deia-stabilizer");
+    const benign = Vars.content.getByName(ContentType.liquid, "deia-benign-neoplasm");
+    if(doc == null || anti == null || stab == null || benign == null){
+        Log.warn("[JS Mod] Lékař nebo jeho kapaliny nenalezeny v HJSON.");
         return;
     }
+    const IMMUNE_TIME = 600;     // 10 s imunity po vyléčení
+    const CURE_RADIUS = 40;      // poloměr, ve kterém léčivo zasáhne louže neoplazmy kolem cíle
+    const IMMUNE_RADIUS = 24;    // poloměr imunní zóny kolem budovy
+    const docTimer = {};
+
+    // vyléčí louže neoplazmy v okolí bodu (x, y) podle použité kapaliny
+    function cureAround(x, y, liq){
+        const list = [];
+        Groups.puddle.each(p => { if(p.liquid == Liquids.neoplasm && p.dst(x, y) <= CURE_RADIUS) list.push(p); });
+        list.forEach(np => {
+            if(liq == anti){
+                np.remove();
+            }else{
+                const tile = Vars.world.tileWorld(np.x, np.y);
+                const amt = np.amount;
+                np.remove();
+                if(tile != null) Puddles.deposit(tile, benign, amt * 0.8);
+            }
+        });
+    }
+
     doc.buildType = () => extend(LiquidTurret.LiquidTurretBuild, doc, {
         findTarget(){
-            this.super$findTarget();
-            if(this.target != null) return;
-
-            // nakažené: nejbližší vlastní budova u louže neoplazmy
             const range = this.range();
-            let best = null, bestDst = 1e9;
-            Groups.puddle.each(p => {
-                if(p.liquid != Liquids.neoplasm || p.dst(this) > range) return;
-                const b = Vars.indexer.findTile(this.team, p.x, p.y, 24, bb => bb != this);
-                if(b != null){
-                    const d = p.dst(b);
-                    if(d < bestDst){ bestDst = d; best = b; }
+            let best = null, bestScore = -1;
+
+            // 1) nejvíc poškozená vlastní budova, která není imunní
+            Vars.indexer.eachBlock(this.team, this.x, this.y, range,
+                b => b != this && b.damaged() && !isImmune(b),
+                b => {
+                    const score = 1 - b.health / b.maxHealth;
+                    if(score > bestScore){ bestScore = score; best = b; }
+                });
+
+            // 2) budova poblíž louže neoplazmy (nejbližší), která není imunní
+            if(best == null){
+                let bestDst = 1e9;
+                Groups.puddle.each(p => {
+                    if(p.liquid != Liquids.neoplasm || p.dst(this) > range) return;
+                    const b = Vars.indexer.findTile(this.team, p.x, p.y, 24, bb => bb != this && !isImmune(bb));
+                    if(b != null){
+                        const d = p.dst(b);
+                        if(d < bestDst){ bestDst = d; best = b; }
+                    }
+                });
+            }
+            this.target = best;
+        },
+
+        updateTile(){
+            this.super$updateTile();
+            const k = this.pos();
+            docTimer[k] = (docTimer[k] || 0) + Time.delta;
+            if(docTimer[k] < 15) return;
+            docTimer[k] = 0;
+
+            // během střelby na cíl: vyléčit neoplazmu kolem něj a cíl na čas zimunnit
+            const t = this.target;
+            if(t != null && t instanceof Building && this.hasAmmo()){
+                const liq = this.liquids.current();
+                if(liq == anti || liq == stab){
+                    cureAround(t.x, t.y, liq);
+                    doctorImmune[t.pos()] = Time.time + IMMUNE_TIME;
                 }
-            });
-            if(best != null) this.target = best;
+            }
         }
+    });
+
+    // imunní zóny: v okolí imunních budov a u samotných Lékařů neoplazma mizí
+    let timer = 0;
+    Events.run(Trigger.update, () => {
+        if(!Vars.state.isGame()) return;
+        timer += Time.delta;
+        if(timer < 20) return;
+        timer = 0;
+
+        const centers = [];
+        Object.keys(doctorImmune).forEach(k => {
+            if(doctorImmune[k] <= Time.time){ delete doctorImmune[k]; return; }
+            const b = Vars.world.build(parseInt(k));
+            if(b != null) centers.push(b);
+        });
+        Groups.build.each(b => { if(b.block == doc) centers.push(b); });
+        if(centers.length == 0) return;
+
+        const kill = [];
+        Groups.puddle.each(p => {
+            if(p.liquid != Liquids.neoplasm) return;
+            for(let i = 0; i < centers.length; i++){
+                if(p.dst(centers[i]) <= IMMUNE_RADIUS + centers[i].block.size * 4){ kill.push(p); return; }
+            }
+        });
+        kill.forEach(p => p.remove());
     });
 });
