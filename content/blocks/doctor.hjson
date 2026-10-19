@@ -1,7 +1,7 @@
 type: LiquidTurret
 name: Lékař
-description: Automaticky léčí infekci neoplazmy: střílí Antineoplazmu, která neoplazmu zničí, nebo Stabilizátor, který ji změní na prospěšnou. Obyčejně poškozené budovy neléčí..
-size: 2
+description: Automaticky léčí infekci neoplazmy: střílí Antineoplazmu, která neoplazmu zničí, nebo Stabilizátor, který ji změní na prospěšnou. Obyčejně poškozené budovy neléčí. Obě kapaliny se musí vyrobit.
+size: 3
 health: 900
 range: 190
 targetHealing: true   // nutné, aby věž směla mířit na vlastní budovy (cíl vybírá skript: jen infekce)

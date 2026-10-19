@@ -27,7 +27,8 @@ ammoTypes: {
     splashDamageRadius: 26
     lifetime: 90
     width: 8
-    height: 10
+    height: 18
+    sprite: deia-sip-missile
     homingPower: 0.7
     homingRange: 220
     trailLength: 14
@@ -46,7 +47,8 @@ ammoTypes: {
     splashDamageRadius: 28
     lifetime: 90
     width: 8
-    height: 10
+    height: 18
+    sprite: deia-sip-missile
     homingPower: 1.2
     homingRange: 260
     trailLength: 16
@@ -65,8 +67,9 @@ ammoTypes: {
     splashDamage: 90
     splashDamageRadius: 48
     lifetime: 100
-    width: 9
-    height: 12
+    width: 10
+    height: 22
+    sprite: deia-sip-missile
     homingPower: 0.9
     homingRange: 240
     trailLength: 16
