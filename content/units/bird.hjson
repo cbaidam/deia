@@ -1,0 +1,23 @@
+type: flying
+name: Pták
+description: Ptáci poletující nad Deiou. Neškodní, jen oživují planetu.
+health: 5
+speed: 1.6
+accel: 0.05
+drag: 0.04
+hitSize: 6
+rotateSpeed: 6
+lowAltitude: false
+canAttack: false
+targetable: false
+hittable: false
+physics: false
+isEnemy: false
+useUnitCap: false
+allowedInPayloads: false
+createWreck: false
+createScorch: false
+drawCell: false
+engineSize: 0
+hidden: true
+playerControllable: false

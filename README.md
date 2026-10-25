@@ -19,4 +19,5 @@ Changeolg:
 * v1.11      | New turret.
 * v1.11Respr.| Resprited.
 * v1.11Resp2.| Resprited.
+* v1.12      | Birs and butterflyes.
 

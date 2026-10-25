@@ -49,14 +49,15 @@ drawer: {
     {
       type: DrawDefault
     }
-    // 2. Prostřední vrstva: Rotující větrák (textura: amino-synthesizer-fan)
+    // 2. Prostřední vrstva: Rotující větrák (textura: agresive-syntetyzer-fan)
     {
       type: DrawBlurSpin
       suffix: "-fan"
       rotateSpeed: 4.5    // Rychlost otáčení větráku
       blurThresh: 0.01
+      spinSprite: True
     }
-    // 3. Vrchní vrstva: Statický kryt/trubky (textura: amino-synthesizer-top)
+    // 3. Vrchní vrstva: Statický kryt/trubky (textura: agresive-syntetyzer-top)
     {
       type: DrawRegion
       suffix: "-top"

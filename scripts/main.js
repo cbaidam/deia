@@ -448,3 +448,73 @@ Events.on(ClientLoadEvent, () => {
         kill.forEach(p => p.remove());
     });
 });
+
+// ---------- 9. Zvířata na Deii (ptáci a motýli) ----------
+// Neškodné jednotky týmu Derelict, které se po mapě volně potulují. Na Deii se vytvoří při načtení mapy.
+Events.on(ClientLoadEvent, () => {
+    const bird = Vars.content.getByName(ContentType.unit, "deia-bird");
+    const butterfly = Vars.content.getByName(ContentType.unit, "deia-butterfly");
+    if(bird == null || butterfly == null){
+        Log.warn("[JS Mod] Zvířata (deia-bird, deia-butterfly) nenalezena v HJSON.");
+        return;
+    }
+
+    // Jednoduché potulování: vybere náhodný cíl v okolí, letí k němu, po čase vybere nový.
+    function wanderAI(radius, wobble){
+        return () => {
+            let tx = 0, ty = 0, has = false, timer = 0, next = 0;
+            return extend(AIController, {
+                updateMovement(){
+                    const u = this.unit;
+                    if(u == null) return;
+                    timer += Time.delta;
+                    if(!has || timer > next || Mathf.within(u.x, u.y, tx, ty, 12)){
+                        const maxX = Vars.world.width() * 8 - 16, maxY = Vars.world.height() * 8 - 16;
+                        tx = Mathf.clamp(u.x + Mathf.range(radius), 16, maxX);
+                        ty = Mathf.clamp(u.y + Mathf.range(radius), 16, maxY);
+                        has = true; timer = 0; next = 60 * Mathf.random(4, 9);
+                    }
+                    const ang = Angles.angle(u.x, u.y, tx, ty) + Mathf.range(wobble);
+                    u.rotation = Angles.moveToward(u.rotation, ang, 4 * Time.delta);
+                    u.moveAt(Tmp.v2.trns(u.rotation, u.speed()));
+                }
+            });
+        };
+    }
+    [[bird, 400, 3], [butterfly, 120, 25]].forEach(a => {
+        a[0].aiController = wanderAI(a[1], a[2]);
+        a[0].controller = u => a[0].aiController.get();   // jinak by tým Derelict dostal ovládání příkazy
+    });
+
+    function spawn(type, count, ok){
+        const w = Vars.world.width(), h = Vars.world.height();
+        for(let i = 0; i < count; i++){
+            for(let tries = 0; tries < 25; tries++){
+                const t = Vars.world.tile(Mathf.random(4, w - 5) | 0, Mathf.random(4, h - 5) | 0);
+                if(t != null && ok(t)){
+                    const u = type.create(Team.derelict);
+                    u.set(t.worldx(), t.worldy());
+                    u.rotation = Mathf.random(360);
+                    u.add();
+                    break;
+                }
+            }
+        }
+    }
+
+    Events.on(WorldLoadEvent, () => {
+        const sector = Vars.state.rules.sector;
+        if(sector == null || sector.planet == null || sector.planet.name != "deia-deie") return;
+        Time.run(90, () => {
+            if(!Vars.state.isGame()) return;
+            const area = Vars.world.width() * Vars.world.height();
+            let haveBirds = 0, haveButterflies = 0;
+            Groups.unit.each(u => {
+                if(u.type == bird) haveBirds++;
+                else if(u.type == butterfly) haveButterflies++;
+            });
+            spawn(bird, Math.floor(area / 1800) - haveBirds, t => true);
+            spawn(butterfly, Math.floor(area / 1200) - haveButterflies, t => !t.floor().isLiquid && t.block() == Blocks.air);
+        });
+    });
+});

@@ -1,8 +1,8 @@
 name: "deia"
 displayName: "Deia"
 author: "Adam Vlasatý"
-description: "[#ff9800]DEIA.[] Tento mod vám do hry přidá budovy jako: Vodní turbína, Vodní elektrárna(energie), Tera-A, Tera-B, Tera-C(věže), nové jádro nabo nové suroviny a předměty."
-version: "1.11Resprited2"
+description: "[#ff9800]DEIA.[] Tento mod vám do hry přidá budovy jako: Vodní turbína, Vodní elektrárna(energie), Tera-A, Tera-B, Tera-C(věže), nové jádro nabo nové suroviny a předměty. V modu je také život! Po mapě vám budou poletovat motýli a ptáci!"
+version: "1.12"
 repo: "Cbaidam/deia"
 minGameVersion: "154"
 hidden: false
