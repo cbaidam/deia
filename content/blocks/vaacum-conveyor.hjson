@@ -1,0 +1,21 @@
+type: Conveyor
+name: Vaakuový dopravník
+description: Dopravník který posílá věci vaakuem, podobně jako hyperloop. Na delší vzdálenosti doporučuji jen pokud máte dostatek surovin.
+health: 20
+speed: 50.2
+displayedSpeed: 20
+
+requirements: [
+  copper/1
+  lead/1
+  titanium/1
+  silicon/10
+  metaglass/5
+  plastanium/2
+]
+
+category: distribution
+
+research: {
+  parent: deia-core
+}

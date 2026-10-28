@@ -37,8 +37,7 @@ const bigGreenSmoke = new Effect(60, e => {
     }
 });
 
-// Efekt je dostupný pod názvem "bigGreenSmoke"
-Fx["bigGreenSmoke"] = bigGreenSmoke;
+// (Fx je Java třída, nové vlastnosti do ní přidat nejde. Efekt se používá přímo jako proměnná bigGreenSmoke.)
 
 // ---------- 2. Logika Uranového destilátoru ----------
 Events.on(ClientLoadEvent, () => {
@@ -450,8 +449,12 @@ Events.on(ClientLoadEvent, () => {
 });
 
 // ---------- 9. Zvířata na Deii (ptáci a motýli) ----------
-// Neškodné jednotky týmu Derelict, které se po mapě volně potulují. Na Deii se vytvoří při načtení mapy.
+// Neškodné jednotky týmu Derelict, které se po mapě volně potulují.
+// Objeví se na planetě Deie a také v mapách Deia / Efrakto / Selefo / Maia (i při testování v editoru).
 Events.on(ClientLoadEvent, () => {
+    const DEBUG = true;   // při true se při spawnu ukáže zpráva (pro ladění; později přepiš na false)
+    const MAP_NAMES = ["Deia", "Efrakto", "Selefo", "Maia", "deie-1", "deie-2", "deie-3", "deie-4"];
+
     const bird = Vars.content.getByName(ContentType.unit, "deia-bird");
     const butterfly = Vars.content.getByName(ContentType.unit, "deia-butterfly");
     if(bird == null || butterfly == null){
@@ -462,21 +465,26 @@ Events.on(ClientLoadEvent, () => {
     // Jednoduché potulování: vybere náhodný cíl v okolí, letí k němu, po čase vybere nový.
     function wanderAI(radius, wobble){
         return () => {
-            let tx = 0, ty = 0, has = false, timer = 0, next = 0;
+            let tx = 0, ty = 0, has = false, timer = 0, next = 0, failed = false;
             return extend(AIController, {
                 updateMovement(){
                     const u = this.unit;
-                    if(u == null) return;
-                    timer += Time.delta;
-                    if(!has || timer > next || Mathf.within(u.x, u.y, tx, ty, 12)){
-                        const maxX = Vars.world.width() * 8 - 16, maxY = Vars.world.height() * 8 - 16;
-                        tx = Mathf.clamp(u.x + Mathf.range(radius), 16, maxX);
-                        ty = Mathf.clamp(u.y + Mathf.range(radius), 16, maxY);
-                        has = true; timer = 0; next = 60 * Mathf.random(4, 9);
+                    if(u == null || failed) return;
+                    try{
+                        timer += Time.delta;
+                        if(!has || timer > next || Mathf.within(u.x, u.y, tx, ty, 12)){
+                            const maxX = Vars.world.width() * 8 - 16, maxY = Vars.world.height() * 8 - 16;
+                            tx = Mathf.clamp(u.x + Mathf.range(radius), 16, maxX);
+                            ty = Mathf.clamp(u.y + Mathf.range(radius), 16, maxY);
+                            has = true; timer = 0; next = 60 * Mathf.random(4, 9);
+                        }
+                        const ang = Angles.angle(u.x, u.y, tx, ty) + Mathf.range(wobble);
+                        u.rotation = Angles.moveToward(u.rotation, ang, 4 * Time.delta);
+                        u.moveAt(Tmp.v2.trns(u.rotation, u.speed()));
+                    }catch(err){
+                        failed = true;
+                        Log.err("[JS Mod] Chyba pohybu zvířete: " + err);
                     }
-                    const ang = Angles.angle(u.x, u.y, tx, ty) + Mathf.range(wobble);
-                    u.rotation = Angles.moveToward(u.rotation, ang, 4 * Time.delta);
-                    u.moveAt(Tmp.v2.trns(u.rotation, u.speed()));
                 }
             });
         };
@@ -487,6 +495,7 @@ Events.on(ClientLoadEvent, () => {
     });
 
     function spawn(type, count, ok){
+        let made = 0;
         const w = Vars.world.width(), h = Vars.world.height();
         for(let i = 0; i < count; i++){
             for(let tries = 0; tries < 25; tries++){
@@ -496,25 +505,60 @@ Events.on(ClientLoadEvent, () => {
                     u.set(t.worldx(), t.worldy());
                     u.rotation = Mathf.random(360);
                     u.add();
+                    made++;
                     break;
                 }
             }
         }
+        return made;
+    }
+
+    function isDeiaMap(){
+        const sector = Vars.state.rules.sector;
+        if(sector != null && sector.planet != null && sector.planet.name == "deia-deie") return true;
+        const planet = Vars.state.rules.planet;
+        if(planet != null && planet.name == "deia-deie") return true;
+        const map = Vars.state.map;
+        return map != null && MAP_NAMES.indexOf(String(map.name())) >= 0;
     }
 
     Events.on(WorldLoadEvent, () => {
-        const sector = Vars.state.rules.sector;
-        if(sector == null || sector.planet == null || sector.planet.name != "deia-deie") return;
         Time.run(90, () => {
-            if(!Vars.state.isGame()) return;
-            const area = Vars.world.width() * Vars.world.height();
-            let haveBirds = 0, haveButterflies = 0;
-            Groups.unit.each(u => {
-                if(u.type == bird) haveBirds++;
-                else if(u.type == butterfly) haveButterflies++;
-            });
-            spawn(bird, Math.floor(area / 1800) - haveBirds, t => true);
-            spawn(butterfly, Math.floor(area / 1200) - haveButterflies, t => !t.floor().isLiquid && t.block() == Blocks.air);
+            try{
+                if(!Vars.state.isGame()) return;
+                if(!isDeiaMap()){
+                    Log.info("[JS Mod] Zvířata: tato mapa není z Deie, nespawnuji.");
+                    return;
+                }
+                const area = Vars.world.width() * Vars.world.height();
+                let haveBirds = 0, haveButterflies = 0;
+                Groups.unit.each(u => {
+                    if(u.type == bird) haveBirds++;
+                    else if(u.type == butterfly) haveButterflies++;
+                });
+                const b = spawn(bird, Math.floor(area / 1800) - haveBirds, t => true);
+                const f = spawn(butterfly, Math.floor(area / 1200) - haveButterflies, t => !t.floor().isLiquid && t.block() == Blocks.air);
+                const msg = "[JS Mod] Zvířata: vytvořeno " + b + " ptáků a " + f + " motýlů (už bylo " + haveBirds + " / " + haveButterflies + ").";
+                Log.info(msg);
+                if(DEBUG) Vars.ui.showInfoToast(msg, 4);
+            }catch(err){
+                Log.err("[JS Mod] Chyba při spawnu zvířat: " + err);
+                if(DEBUG) Vars.ui.showInfoToast("Chyba zvířat: " + err, 6);
+            }
         });
+    });
+    Log.info("[JS Mod] Zvířata zaregistrována.");
+});
+
+
+// ---------- 10. Vodní elektrárna běží, i když je voda plná ----------
+Events.on(ClientLoadEvent, () => {
+    const plant = Vars.content.getByName(ContentType.block, "deia-hydro-plant");
+    if(plant == null){
+        Log.warn("[JS Mod] Vodní elektrárna (deia-hydro-plant) nenalezena v HJSON.");
+        return;
+    }
+    plant.buildType = () => extend(ConsumeGenerator.ConsumeGeneratorBuild, plant, {
+        shouldConsume(){ return true; }   // nezastaví se, i když je nádrž s vodou plná
     });
 });

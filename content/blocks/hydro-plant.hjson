@@ -9,7 +9,6 @@ hasLiquids: true
 liquidCapacity: 60
 
 powerProduction: 9.0
-ignoreLiquidFullness: true
 
 outputLiquid: {
   liquid: water

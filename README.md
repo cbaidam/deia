@@ -4,20 +4,21 @@ MINDUSTRY MOD
 
 Changeolg:
 
-* v1.5BugFix | Bug fixes.
+* v1.5BugFix | Bug Fixes.
 * v1.6       | New blocks: "Water turbine", "Hydro-plant".
 * v1.6BugFix | Bug Fixes.
 * v1.7       | New music.
 * v1.8       | New planet.
-* v1.8BugFix | Bug fixes.
+* v1.8BugFix | Bug Fixes.
 * v1.9       | New research tree.
 * v1.9BugFix | Bug fixes and new description.
 * v1.10      | New turret.
 * v1.10Neopl.| New block "doctor".
 * v1.10Respr.| New sprite(s).
-* v1.10BugFix| Bug fixes.
+* v1.10BugFix| Bug Fixes.
 * v1.11      | New turret.
 * v1.11Respr.| Resprited.
 * v1.11Resp2.| Resprited.
 * v1.12      | Birs and butterflyes.
+* v1.12BugFix| Bug Fixes
 

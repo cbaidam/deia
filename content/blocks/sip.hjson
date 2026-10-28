@@ -10,7 +10,7 @@ inaccuracy: 6
 maxAmmo: 30
 targetAir: true
 targetGround: true
-shootSound: missile
+shootSound: shootMissile
 ammoUseEffect: casing1
 
 shoot: {

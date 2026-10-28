@@ -10,7 +10,7 @@ maxAmmo: 200
 inaccuracy: 0
 rotateSpeed: 175
 reload: 2
-shootSound: deia-tera
+shootSound: tera
 
 // Nastavení chlazení kryogenem (cryofluid)
 hasLiquids: true

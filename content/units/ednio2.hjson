@@ -1,6 +1,6 @@
     "type": "flying",
     name: Ednio II
-    loopSound: deia-ednio-hum2
+    loopSound: ednio-hum2
     loopSoundVolume: 0.3
     "lowAltitude": true,
     "speed": 4.4,
@@ -44,7 +44,7 @@ top: false
 rotate: true
 reload: 50
 recoil: 2
-    shootSound: pew
+    shootSound: shootAlpha
     bullet: {
       speed: 8
       lifetime: 40
@@ -104,7 +104,7 @@ recoil: 2
               sizeFrom: 3
               sizeTo: 0
               colorFrom: 3ce82f
-              colorTo: 218e18
+              colorTo: "218e18"
               strokeFrom: 3
               strokeTo: 1.5
               interp: pow3Out

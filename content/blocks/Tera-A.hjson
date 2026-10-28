@@ -10,7 +10,7 @@ maxAmmo: 200
 inaccuracy: 0
 rotateSpeed: 150
 reload: 3
-shootSound: deia-tera
+shootSound: tera
 
 // Nastavení chlazení kapalinou
 hasLiquids: true
