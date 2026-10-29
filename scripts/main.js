@@ -1,3 +1,11 @@
+// ---------- Pomocná funkce: projdi všechny louže ----------
+// V této verzi hry už neexistuje Groups.puddle, louže jsou v Groups.all (jako entity typu Puddle).
+function eachPuddle(cons){
+    const list = [];
+    Groups.all.each(e => { if(e instanceof Puddle) list.push(e); });
+    list.forEach(cons);
+}
+
 // ---------- Hudba ----------
 // Soubory musí být ve složce music/ (název bez přípony).
 function addDeiaMusic(){
@@ -265,7 +273,7 @@ Events.on(ClientLoadEvent, () => {
         timer = 0;
 
         const neo = [], cures = [], goods = [];
-        Groups.puddle.each(p => {
+        eachPuddle(p => {
             if(p.liquid == Liquids.neoplasm) neo.push(p);
             else if(p.liquid == anti || p.liquid == stab) cures.push(p);
             else if(p.liquid == benign) goods.push(p);
@@ -368,7 +376,7 @@ Events.on(ClientLoadEvent, () => {
     // vyléčí louže neoplazmy v okolí bodu (x, y) podle použité kapaliny
     function cureAround(x, y, liq){
         const list = [];
-        Groups.puddle.each(p => { if(p.liquid == Liquids.neoplasm && p.dst(x, y) <= CURE_RADIUS) list.push(p); });
+        eachPuddle(p => { if(p.liquid == Liquids.neoplasm && p.dst(x, y) <= CURE_RADIUS) list.push(p); });
         list.forEach(np => {
             if(liq == anti){
                 np.remove();
@@ -389,7 +397,7 @@ Events.on(ClientLoadEvent, () => {
             // jen budova poblíž louže neoplazmy (nejbližší), která není imunní
             {
                 let bestDst = 1e9;
-                Groups.puddle.each(p => {
+                eachPuddle(p => {
                     if(p.liquid != Liquids.neoplasm || p.dst(this) > range) return;
                     const b = Vars.indexer.findTile(this.team, p.x, p.y, 24, bb => bb != this && !isImmune(bb));
                     if(b != null){
@@ -438,7 +446,7 @@ Events.on(ClientLoadEvent, () => {
         if(centers.length == 0) return;
 
         const kill = [];
-        Groups.puddle.each(p => {
+        eachPuddle(p => {
             if(p.liquid != Liquids.neoplasm) return;
             for(let i = 0; i < centers.length; i++){
                 if(p.dst(centers[i]) <= IMMUNE_RADIUS + centers[i].block.size * 4){ kill.push(p); return; }
