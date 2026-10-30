@@ -1,0 +1,22 @@
+type: CoreBlock
+name: Centrální ovládací jednotka
+description: Jádro, které lze postavit kdekoli, i mimo zónu pro jádro a bez stavby přes jiné jádro. Stojí velké množství surovin z jádra.
+size: 3
+health: 3500
+armor: 6
+itemCapacity: 6000
+unitType: ednio2
+unitCapModifier: 12
+
+requirements: [
+  copper/3000
+  silicon/2000
+  titanium/1000
+  plastanium/300
+]
+
+category: effect
+
+research: {
+  parent: deia-core
+}

@@ -570,3 +570,33 @@ Events.on(ClientLoadEvent, () => {
         shouldConsume(){ return true; }   // nezastaví se, i když je nádrž s vodou plná
     });
 });
+
+
+// ---------- 11. Centrální ovládací jednotka se dá postavit kdekoli ----------
+// Hra dovolí postavit jádro mimo zónu pro jádro jen tehdy, když mají všechna políčka podlahy allowCorePlacement.
+// Dokud hráč drží v ruce Centrální ovládací jednotku, tento příznak se zapne všem podlahám. Jinak se vrátí původní hodnoty.
+Events.on(ClientLoadEvent, () => {
+    const central = Vars.content.getByName(ContentType.block, "deia-central-unit");
+    if(central == null){
+        Log.warn("[JS Mod] Centrální ovládací jednotka (deia-central-unit) nenalezena v HJSON.");
+        return;
+    }
+    const floors = [];
+    Vars.content.blocks().each(b => { if(b instanceof Floor) floors.push(b); });
+    const original = floors.map(f => f.allowCorePlacement);
+    let open = false;
+
+    function setOpen(value){
+        if(open == value) return;
+        open = value;
+        for(let i = 0; i < floors.length; i++){
+            floors[i].allowCorePlacement = value ? true : original[i];
+        }
+    }
+
+    Events.run(Trigger.update, () => {
+        const input = Vars.control.input;
+        setOpen(input != null && input.block == central);
+    });
+    Log.info("[JS Mod] Centrální ovládací jednotka: stavba kdekoli aktivní (" + floors.length + " podlah).");
+});

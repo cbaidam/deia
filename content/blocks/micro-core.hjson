@@ -1,0 +1,21 @@
+type: CoreBlock
+name: Deia Micro
+description: Nejmenší jádro Deie. Je to startovní jádro pro mapy (staví se v editoru) a dá se vylepšit na větší jádra.
+size: 2
+health: 900
+armor: 2
+itemCapacity: 2500
+unitType: ednio
+unitCapModifier: 4
+alwaysUnlocked: true
+
+requirements: [
+  copper/400
+  lead/200
+]
+
+category: effect
+
+research: {
+  parent: deia-core
+}
